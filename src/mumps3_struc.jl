@@ -1,9 +1,9 @@
-# this file mirros the relevant content of the "[sdcz]mumps_c.h" file of MUMPS 5.7.1
+# this file mirros the relevant content of the "[sdcz]mumps_c.h" file of MUMPS 5.9.0
 # `gc_haven`, contains Julia references to protect the pointers passed to C
 # from gargage collection.
 export Mumps
 
-const MUMPS_VERSION = "5.7.1"
+const MUMPS_VERSION = "5.9.0"
 const MUMPS_VERSION_MAX_LEN = 30
 
 # mirror of structre in [sdcz]mumps_c.h
@@ -104,6 +104,8 @@ mutable struct Mumps{TC,TR}
     mapping::Ptr{MUMPS_INT}
     singular_values::Ptr{TR}
 
+    # Added in MUMPS 5.9.0
+    nb_singular_values::MUMPS_INT
 
     size_schur::MUMPS_INT
     listvar_schur::Ptr{MUMPS_INT}

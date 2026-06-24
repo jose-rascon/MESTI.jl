@@ -60,17 +60,17 @@ Problems that MESTI.jl does not handle:
 For eigenmode computation, such as waveguide mode solver and photonic band structure computation, one can use [<code>mesti_build_fdfd_matrix.jl</code>](./src/mesti_build_fdfd_matrix.jl) to build the matrix and then compute its eigenmodes. However, we don't currently provide a dedicated function to do so.
 
 ## Installation
-MESTI.jl is written and run in Julia programming language. Follow the standard process to download and install Julia. We can download Julia [here](https://julialang.org/downloads/). Suppose we installed the 1.9.3 version of Julia. After Julia is installed, we can add the path of your Julia to <code>PATH</code> through the terminal by 
+MESTI.jl is written and run in Julia programming language. Follow the standard process to download and install Julia. We can download Julia [here](https://julialang.org/downloads/). Suppose we installed the 1.12.6 version of Julia. After Julia is installed, we can add the path of your Julia to <code>PATH</code> through the terminal by 
 
 ```shell
-export PATH=".../julia-1.9.3/bin/"
+export PATH=".../julia-1.12.6/bin/"
 ```
 
 where  <code>...</code> is the path to your Julia.
 
-Before installing MESTI.jl, the user first needs to install the parallel version of the sparse linear solver [MUMPS](https://mumps-solver.org/index.php). Without MUMPS, MESTI.jl can still run but cannot use the APF method and will only use a conventional method with the built-in linear solver, which can be orders of magnitude slower and uses much more memory (especially in 3D and for large 2D systems). See this [MUMPS installation](./mumps) page for steps to install MUMPS. For this MESTI (v0.5.0), it is compatible with MUMPS versions 5.7.0 and 5.7.1, but not with versions earlier than 5.7.0. We highly recommend using the latest version of MUMPS. 
+Before installing MESTI.jl, the user first needs to install the parallel version of the sparse linear solver [MUMPS](https://mumps-solver.org/index.php). Without MUMPS, MESTI.jl can still run but cannot use the APF method and will only use a conventional method with the built-in linear solver, which can be orders of magnitude slower and uses much more memory (especially in 3D and for large 2D systems). See this [MUMPS installation](./mumps) page for steps to install MUMPS. For this MESTI (v0.5.1), it is compatible with MUMPS versions 5.7.1 and 5.9.0, but not with versions earlier than 5.7.0. We highly recommend using the latest version of MUMPS. 
 
-After the MUMPS installation, if you have a clean Julia environment (*i.e.* have not installed any Julia package before or have not installed new version of [Makie.jl](https://github.com/MakieOrg/Makie.jl)(v0.20 and v0.21) and [GeometryPrimitives.jl](https://github.com/stevengj/GeometryPrimitives.jl)(v0.5.0), you can install MESTI.jl (v0.5.0) by opening the command-line interface of Julia and typing:  
+After the MUMPS installation, if you have a clean Julia environment (*i.e.* have not installed any Julia package before or have not installed new version of [Makie.jl](https://github.com/MakieOrg/Makie.jl)(v0.20 and v0.21) and [GeometryPrimitives.jl](https://github.com/stevengj/GeometryPrimitives.jl)(v0.5.0), you can install MESTI.jl (v0.5.1) by opening the command-line interface of Julia and typing:  
 
 ```julia
 import Pkg; Pkg.add("MESTI")

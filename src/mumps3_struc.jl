@@ -103,7 +103,7 @@ mutable struct Mumps{TC,TR}
     pivnul_list::Ptr{MUMPS_INT}
     mapping::Ptr{MUMPS_INT}
     singular_values::Ptr{TR}
-
+    
     # Added in MUMPS 5.9.0
     nb_singular_values::MUMPS_INT
 

@@ -1,3 +1,5 @@
+This is a fork of MESTI.jl, intended for newer versions of MUMPS and Julia. Currently MUMPS 5.9.0 is supported and it implemented several changes that affected MESTI.jl. Likewise, Julia also changed since the last version of MESTI (v.0.5.1) and some examples require necessary changes that are here implemented.
+
 # MESTI.jl
 
 **MESTI** (<ins>M</ins>axwell's <ins>E</ins>quations <ins>S</ins>olver with <ins>T</ins>housands of <ins>I</ins>nputs) is an open-source software for full-wave electromagnetic simulations in frequency domain using finite-difference discretization on the [Yee lattice](https://meep.readthedocs.io/en/latest/Yee_Lattice).

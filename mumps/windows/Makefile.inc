@@ -1,6 +1,6 @@
 #
-#  This file is part of MUMPS 5.7.1, released
-#  on Thu May  2 10:15:09 UTC 2024
+#  This file is part of MUMPS 5.9.0, released
+#  on Tue Apr 28 13:05:59 UTC 2026
 #
 ################################################################################
 #

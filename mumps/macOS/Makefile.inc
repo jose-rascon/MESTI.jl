@@ -1,6 +1,6 @@
 #
-#  This file is part of MUMPS 5.7.1, released
-#  on Thu May 2 10:15:09 UTC 2024
+#  This file is part of MUMPS 5.9.0, released
+#  on Tue Apr 28 13:05:59 UTC 2026
 #
 ################################################################################
 #
@@ -40,8 +40,9 @@
 #          Metis/ParMetis and SCOTCH/PT-SCOTCH (ver 6.0 and later) orderings are recommended.
 #
 
-#SCOTCHDIR  = ${HOME}/scotch_6.0
-#ISCOTCH    = -I$(SCOTCHDIR)/include
+SCOTCHDIR  = /opt/homebrew/opt/scotch
+ISCOTCH    = -I$(SCOTCHDIR)/include
+
 #
 # You have to choose one among the following two lines depending on
 # the type of analysis you want to perform. If you want to perform only
@@ -50,19 +51,16 @@
 # line (remember to add -Dptscotch in the ORDERINGSF variable below)
 
 #LSCOTCH    = -L$(SCOTCHDIR)/lib -lesmumps -lscotch -lscotcherr
-#LSCOTCH    = -L$(SCOTCHDIR)/lib -lptesmumps -lptscotch -lptscotcherr
+
+LSCOTCH    = -L$(SCOTCHDIR)/lib -lptesmumps -lscotch -lptscotch -lptscotcherr
 
 
-LPORDDIR = $(topdir)/PORD/lib
-IPORD    = -I$(topdir)/PORD/include
-LPORD    = -L$(LPORDDIR) -lpord
+LPORDDIR = $(topdir)/PORD/lib/
+IPORD    = -I$(topdir)/PORD/include/
+LPORD    = -L$(LPORDDIR) -lpord$(PLAT)
 
-# It is strongly recommended to install METIS for 3D calculations. The 3D calculations can be
-# extremely slow and time consuming without METIS. You can specify the library and include 
-# directory for METIS in the following two lines
-
-LMETISDIR = /usr/local/lib
-IMETIS    = -I/usr/local/include
+LMETISDIR = /opt/homebrew/opt/metis/lib
+IMETIS    = -I/opt/homebrew/opt/metis/include
 
 # You have to choose one among the following two lines depending on
 # the type of analysis you want to perform. If you want to perform only
@@ -71,18 +69,20 @@ IMETIS    = -I/usr/local/include
 # line (remember to add -Dparmetis in the ORDERINGSF variable below)
 
 LMETIS    = -L$(LMETISDIR) -lmetis
+# LMETIS    = -L$(LMETISDIR) -lparmetis -lmetis
 
 # The following variables will be used in the compilation process.
 # Please note that -Dptscotch and -Dparmetis imply -Dscotch and -Dmetis respectively.
 # If you want to use Metis 4.X or an older version, you should use -Dmetis4 instead of -Dmetis
 # or in addition with -Dparmetis (if you are using parmetis 3.X or older).
 
-ORDERINGSF  = -Dpord -Dmetis
+ORDERINGSF = -Dpord -Dmetis -Dptscotch
+#ORDERINGSF  = -Dpord
 ORDERINGSC  = $(ORDERINGSF)
 
 LORDERINGS = $(LMETIS) $(LPORD) $(LSCOTCH)
-IORDERINGSF = $(ISCOTCH) $(IPORD)
-IORDERINGSC = $(IMETIS) $(ISCOTCH) $(IPORD)
+IORDERINGSF = $(ISCOTCH)
+IORDERINGSC = $(IMETIS) $(IPORD) $(ISCOTCH)
 
 #End orderings
 ########################################################################
@@ -91,22 +91,28 @@ IORDERINGSC = $(IMETIS) $(ISCOTCH) $(IPORD)
 # DEFINE HERE SOME COMMON COMMANDS, THE COMPILER NAMES, ETC...
 
 # PLAT : use it to add a default suffix to the generated libraries
-PLAT    =
-# Library extension, + C and Fortran "-o" option
-# The shared libraries in /lib are *.dylib instead of *.so on Mac. 
+PLAT    = 
+# Suffix for libraries, -soname and -fPIC options, C and Fortran "-o" option
+# may be adapted
+
+SONAME = -install_name
+
+# Adapt/uncomment RPATH_OPT to avoid modifying
+# LD_LIBRARY_PATH in case of shared libraries
+
+RPATH_OPT = -Wl,-rpath,/Users/jrascon/MUMPS_5.9.0/lib/
 LIBEXT  = .a
 LIBEXT_SHARED = .dylib
-SONAME = -install_name
 OUTC    = -o 
 OUTF    = -o 
 # RM : remove files
 RM      = /bin/rm -f
 # CC : C compiler
-CC      = mpicc
+CC      = mpicc -fopenmp
 # FC : Fortran 90 compiler
-FC      = mpifort
+FC      = mpifort -fopenmp
 # FL : Fortran linker
-FL      = mpifort
+FL      = mpifort -fopenmp
 # AR : Archive object in a library
 #      keep a space at the end if options have to be separated from lib name
 AR      = ar vr 
@@ -116,13 +122,14 @@ RANLIB  = ranlib
 #RANLIB  = echo
 
 # DEFINE HERE YOUR LAPACK LIBRARY
+
 LAPACK = -framework Accelerate
 
-# SCALAP should define the SCALAPACK and BLACS libraries.
-SCALAP =  -L/opt/homebrew/opt/scalapack/lib -lscalapack
+# SCALAP should define the SCALAPACK and  BLACS libraries.
+SCALAP  = -L/opt/homebrew/opt/scalapack/lib -lscalapack
 
 # INCLUDE DIRECTORY FOR MPI
-INCPAR  = -I/opt/homebrew/opt/open-mpi/include 
+INCPAR  = -I/opt/homebrew/opt/open-mpi/include
 
 # LIBRARIES USED BY THE PARALLEL VERSION OF MUMPS: $(SCALAP) and MPI
 LIBPAR  = $(SCALAP) $(LAPACK) -L/opt/homebrew/opt/open-mpi/lib -lmpi
@@ -131,14 +138,14 @@ LIBPAR  = $(SCALAP) $(LAPACK) -L/opt/homebrew/opt/open-mpi/lib -lmpi
 # They are related to the sequential library provided by MUMPS,
 # to use instead of ScaLAPACK and MPI.
 INCSEQ  = -I$(topdir)/libseq
-LIBSEQ  = $(LAPACK) -L$(topdir)/libseq -lmpiseq
+LIBSEQ  = $(LAPACK) -L$(topdir)/libseq -lmpiseq$(PLAT)
 
 # DEFINE HERE YOUR BLAS LIBRARY
 
 LIBBLAS = -framework Accelerate
 
 # DEFINE HERE YOUR PTHREAD LIBRARY
-LIBOTHERS = -lpthread
+LIBOTHERS = -lpthread -fopenmp
 
 # FORTRAN/C COMPATIBILITY:
 #  Use:
@@ -156,7 +163,7 @@ CDEFS = -DAdd_
 #COMPILER OPTIONS
 OPTF    = -O -fPIC -fopenmp -fallow-argument-mismatch
 OPTC    = -O -I. -fPIC -fopenmp
-OPTL    = -O -fPIC -fopenmp
+OPTL    = -O -fPIC -dynamiclib -fopenmp
 
 # CHOOSE BETWEEN USING THE SEQUENTIAL OR THE PARALLEL VERSION.
 

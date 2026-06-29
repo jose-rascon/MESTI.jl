@@ -98,8 +98,8 @@ mutable struct Mumps{TC,TR}
 
     rinfo::NTuple{40,TR}
     rinfog::NTuple{40,TR}
-
-    # deficiency::MUMPS_INT
+    # Removed for MUMPS 5.9.0
+    # deficiency::MUMPS_INT 
     pivnul_list::Ptr{MUMPS_INT}
     mapping::Ptr{MUMPS_INT}
     singular_values::Ptr{TR}

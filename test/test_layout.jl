@@ -22,10 +22,10 @@ using MESTI
             :schur               => off(:schur),
         )
 
-        # The new MUMPS 5.9 field must exist.
+        # The new MUMPS 5.9.0 field must exist.
         @test :nb_singular_values in fn
 
-        # The old MUMPS 5.7 field must be gone.
+        # The old MUMPS 5.7.1 field must be gone.
         @test !(:deficiency in fn)
     end
 

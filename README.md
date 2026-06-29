@@ -70,10 +70,16 @@ where  <code>...</code> is the path to your Julia.
 
 Before installing MESTI.jl, the user first needs to install the parallel version of the sparse linear solver [MUMPS](https://mumps-solver.org/index.php). Without MUMPS, MESTI.jl can still run but cannot use the APF method and will only use a conventional method with the built-in linear solver, which can be orders of magnitude slower and uses much more memory (especially in 3D and for large 2D systems). See this [MUMPS installation](./mumps) page for steps to install MUMPS. For this MESTI (v0.5.1), it is compatible with MUMPS versions 5.7.1 and 5.9.0, but not with versions earlier than 5.7.0. We highly recommend using the latest version of MUMPS. 
 
-After the MUMPS installation, if you have a clean Julia environment (*i.e.* have not installed any Julia package before or have not installed new version of [Makie.jl](https://github.com/MakieOrg/Makie.jl)(v0.20 and v0.21) and [GeometryPrimitives.jl](https://github.com/stevengj/GeometryPrimitives.jl)(v0.5.0), you can install MESTI.jl (v0.5.1) by opening the command-line interface of Julia and typing:  
+After the MUMPS installation, if you have a clean Julia environment (*i.e.* have not installed any Julia package before or have not installed new version of [Makie.jl](https://github.com/MakieOrg/Makie.jl)(v0.20 and v0.21) and [GeometryPrimitives.jl](https://github.com/stevengj/GeometryPrimitives.jl)(v0.5.0)), you can install the original MESTI.jl (v0.5.1) by opening the command-line interface of Julia and typing:  
 
 ```julia
 import Pkg; Pkg.add("MESTI")
+```
+
+Alternatively, you can install this fork's MESTI.jl (v0.5.2) by typing instead:
+
+```julia
+import Pkg; Pkg.add(url="https://github.com/jose-rascon/MESTI.jl.git")
 ```
 
 On the other hand, if you have installed these two Julia packages: the new version of [Makie.jl](https://github.com/MakieOrg/Makie.jl)(v0.20 and v0.21) and [GeometryPrimitives.jl](https://github.com/stevengj/GeometryPrimitives.jl)(v0.5.0). You will encounter some compatibility problems and the installation will fail. In this case, please run 
@@ -82,7 +88,7 @@ On the other hand, if you have installed these two Julia packages: the new versi
 import Pkg; Pkg.add(Pkg.PackageSpec(;name="Makie", version="0.19.12")); Pkg.add("GeometryPrimitives"); Pkg.add("MESTI")
 ```
 
-to downgrade them to the old version compatible with our MESTI.jl and then install MESTI.jl(v0.5.0).
+to downgrade them to the old version compatible with our MESTI.jl and then install MESTI.jl(v0.5.2).
 
 After installing MESTI.jl, if the user happens to run the command to upgrade every Julia package to the latest version, such as *Pkg.update()*, it would install the latest version of Makie.jl and make MESTI.jl not compatible with it. So please rerun the line above to downgrade to the compatible version and reinstall MESTI.jl.
 
@@ -95,7 +101,7 @@ import Pkg; Pkg.status("MESTI")
 If you want our latest MESTI.jl, it should show
 
 ```julia
-[8d7f31fa] MESTI v0.5.0
+[8d7f31fa] MESTI v0.5.2
 ```
 
 ## Tests

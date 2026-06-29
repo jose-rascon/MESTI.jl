@@ -10,24 +10,7 @@ To compile the parallel version of MUMPS, you need compilation tools like <code>
 2. [macOS](./macOS)
 3. [windows](./windows)
 
-If you are interested in 3D systems or memory usage in 2D systems is important for you, we highly recommend you install the [METIS](http://glaros.dtc.umn.edu/gkhome/metis/metis/overview) (version 5.1.0) program for graph partitioning (not to be confused with MESTI). We can install METIS in the following steps:
-(a) Downloading METIS (version 5.1.0)
-```shell
-wget http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/metis-5.1.0.tar.gz
-```
-(b) Decompress metis-5.1.0.tar.gz
-```shell
-tar zxvf metis-5.1.0.tar.gz
-```
-(c) Setting METIS to double precision
-```shell
-sed -i "43s/32/64/" metis-5.1.0/include/metis.h
-```
-(d) Installing METIS
-```shell
-cd metis-5.1.0; make config; sudo make install;
-```
-Then, by default, the library file, header file, and binaries will be installed in `/usr/local/lib`, `/usr/local/include`, and `/usr/local/bin`. In some rare cases, your machine cannot find METIS libraries by itself when you run Julia interface for MUMPS. You can append the METIS libraries to your `LD_LIBRARYP_PATH`
+If you are interested in 3D systems or memory usage in 2D systems is important for you, we highly recommend you install the [METIS](https://github.com/KarypisLab/METIS.git) program for graph partitioning (not to be confused with MESTI). By default, the library file, header file, and binaries will be installed in `/usr/local/lib`, `/usr/local/include`, and `/usr/local/bin`. In some rare cases, your machine cannot find METIS libraries by itself when you run Julia interface for MUMPS. You can append the METIS libraries to your `LD_LIBRARYP_PATH`
 ```shell
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LMETISDIR
 ```
